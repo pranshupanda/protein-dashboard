@@ -1,145 +1,141 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" font-family="Helvetica, Arial, sans-serif" role="img" aria-label="Summary of the 4-type benchmark: held-out gain by method, and what Qwen and gpt-oss change">
-<rect width="1200" height="680" fill="#ffffff"/>
-<text x="36" y="42" font-size="21" fill="#0b0b0b" font-weight="bold" text-anchor="start">4-type benchmark (all L = 128): how well the programs do, and what the models change</text>
-<text x="36" y="64" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">Held-out = 40 new problems (seeds 4-13) of the same four types, 100 queries each. Gain = best value found minus the best of 100 random queries. Higher is better.</text>
-<text x="36" y="104" font-size="14" fill="#0b0b0b" font-weight="bold" text-anchor="start">Held-out gain over random search</text>
-<text x="596" y="104" font-size="11" fill="#74736f" font-weight="normal" text-anchor="start">mean (n)</text>
-<text x="672" y="104" font-size="11" fill="#74736f" font-weight="normal" text-anchor="start">random queries</text>
-<text x="672" y="117" font-size="11" fill="#74736f" font-weight="normal" text-anchor="start">to match</text>
-<text x="36" y="138" font-size="10" fill="#74736f" font-weight="bold" text-anchor="start" stroke="#ffffff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">STARTING POINT</text>
-<text x="36" y="198" font-size="10" fill="#74736f" font-weight="bold" text-anchor="start" stroke="#ffffff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">CLASSICAL OPTIMIZERS</text>
-<text x="36" y="288" font-size="10" fill="#74736f" font-weight="bold" text-anchor="start" stroke="#ffffff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">LLM LOOPS, 40 ITERATIONS</text>
-<text x="36" y="378" font-size="10" fill="#74736f" font-weight="bold" text-anchor="start" stroke="#ffffff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">CLAUDE-WRITTEN REFERENCES (SEE NOTE)</text>
-<line x1="299.2" y1="124" x2="299.2" y2="512" stroke="#e4e3df" stroke-width="1"/>
-<text x="299.2" y="528" font-size="10" fill="#74736f" font-weight="normal" text-anchor="middle">0</text>
-<line x1="373.8" y1="124" x2="373.8" y2="512" stroke="#e4e3df" stroke-width="1"/>
-<text x="373.8" y="528" font-size="10" fill="#74736f" font-weight="normal" text-anchor="middle">+0.04</text>
-<line x1="448.2" y1="124" x2="448.2" y2="512" stroke="#e4e3df" stroke-width="1"/>
-<text x="448.2" y="528" font-size="10" fill="#74736f" font-weight="normal" text-anchor="middle">+0.08</text>
-<line x1="522.8" y1="124" x2="522.8" y2="512" stroke="#e4e3df" stroke-width="1"/>
-<text x="522.8" y="528" font-size="10" fill="#74736f" font-weight="normal" text-anchor="middle">+0.12</text>
-<text x="411.0" y="544" font-size="11" fill="#52514e" font-weight="normal" text-anchor="middle">held-out gain over random search</text>
-<line x1="359.7" y1="124" x2="359.7" y2="512" stroke="#0b0b0b" stroke-width="1.5" stroke-dasharray="4 3"/>
-<text x="250" y="164" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Seed program</text>
-<circle cx="359.7" cy="160" r="4.5" fill="#0b0b0b" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>unchanged seed program: +0.0324</title></circle>
-<text x="596" y="164" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.032  (n=1)</text>
-<text x="672" y="164" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~286</text>
-<text x="250" y="224" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Hill climbing</text>
-<circle cx="330.0" cy="214" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.0165</title></circle>
-<circle cx="331.9" cy="220" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: +0.0175</title></circle>
-<circle cx="333.0" cy="226" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.0181</title></circle>
-<circle cx="336.0" cy="217" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: +0.0197</title></circle>
-<circle cx="345.9" cy="223" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.0251</title></circle>
-<rect x="333.9" y="211" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="224" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.019  (n=5)</text>
-<text x="672" y="224" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~155</text>
-<text x="250" y="254" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Genetic algorithm</text>
-<circle cx="292.1" cy="244" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: -0.0039</title></circle>
-<circle cx="294.6" cy="250" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: -0.0025</title></circle>
-<circle cx="308.3" cy="256" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.0049</title></circle>
-<circle cx="324.4" cy="247" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.0135</title></circle>
-<circle cx="339.3" cy="253" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.0215</title></circle>
-<rect x="310.2" y="241" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="254" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.007  (n=5)</text>
-<text x="672" y="254" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">&lt;=100</text>
-<text x="250" y="314" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">gpt-oss-20b</text>
-<circle cx="340.8" cy="304" r="4.5" fill="#eb6834" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 44: +0.0223</title></circle>
-<circle cx="359.7" cy="310" r="4.5" fill="#eb6834" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 46: +0.0324</title></circle>
-<circle cx="375.3" cy="316" r="4.5" fill="#eb6834" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 45: +0.0408</title></circle>
-<circle cx="439.1" cy="307" r="4.5" fill="#eb6834" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 43: +0.0751</title></circle>
-<circle cx="486.4" cy="313" r="4.5" fill="#eb6834" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 42: +0.1005</title></circle>
-<rect x="398.7" y="301" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="314" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.054  (n=5)</text>
-<text x="672" y="314" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~735</text>
-<text x="250" y="344" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Qwen3.8-Flash-Next</text>
-<circle cx="411.0" cy="334" r="4.5" fill="#2a78d6" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 46: +0.0600</title></circle>
-<circle cx="415.1" cy="340" r="4.5" fill="#2a78d6" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 43: +0.0622</title></circle>
-<circle cx="419.7" cy="346" r="4.5" fill="#2a78d6" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 44: +0.0647</title></circle>
-<circle cx="425.3" cy="337" r="4.5" fill="#2a78d6" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 42: +0.0677</title></circle>
-<circle cx="469.8" cy="343" r="4.5" fill="#2a78d6" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>search seed 45: +0.0916</title></circle>
-<rect x="426.7" y="331" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="344" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.069  (n=5)</text>
-<text x="672" y="344" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~1418</text>
-<text x="250" y="404" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Claude (me), first attempt</text>
-<circle cx="408.0" cy="394" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.0584</title></circle>
-<circle cx="443.5" cy="400" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.0774</title></circle>
-<circle cx="445.9" cy="406" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: +0.0788</title></circle>
-<circle cx="449.1" cy="397" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.0804</title></circle>
-<circle cx="452.9" cy="403" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: +0.0825</title></circle>
-<rect x="438.4" y="391" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="404" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.075  (n=5)</text>
-<text x="672" y="404" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~1875</text>
-<text x="250" y="434" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Claude (me), tuned</text>
-<circle cx="515.7" cy="424" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: +0.1162</title></circle>
-<circle cx="517.5" cy="430" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.1172</title></circle>
-<circle cx="521.8" cy="436" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.1195</title></circle>
-<circle cx="525.4" cy="427" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: +0.1214</title></circle>
-<circle cx="557.2" cy="433" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.1385</title></circle>
-<rect x="526.0" y="421" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="434" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.123  (n=5)</text>
-<text x="672" y="434" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">&gt;3000</text>
-<text x="250" y="464" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Opus 5.5 subagent, one-shot</text>
-<circle cx="334.5" cy="454" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.0189</title></circle>
-<circle cx="349.8" cy="460" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: +0.0271</title></circle>
-<circle cx="372.6" cy="466" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: +0.0394</title></circle>
-<circle cx="400.9" cy="457" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.0546</title></circle>
-<circle cx="401.6" cy="463" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.0550</title></circle>
-<rect x="370.4" y="451" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="464" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.039  (n=5)</text>
-<text x="672" y="464" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~381</text>
-<text x="250" y="494" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="end">Opus 5.5 subagent, tuned once</text>
-<circle cx="396.1" cy="484" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 2: +0.0520</title></circle>
-<circle cx="404.4" cy="490" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 1: +0.0565</title></circle>
-<circle cx="409.5" cy="496" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 3: +0.0592</title></circle>
-<circle cx="410.2" cy="487" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 0: +0.0596</title></circle>
-<circle cx="420.0" cy="493" r="4.5" fill="#8a8984" fill-opacity="0.85" stroke="#ffffff" stroke-width="2"><title>internal seed 4: +0.0648</title></circle>
-<rect x="406.6" y="481" width="3" height="18" rx="1.5" fill="#0b0b0b"/>
-<text x="596" y="494" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">+0.058  (n=5)</text>
-<text x="672" y="494" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">~881</text>
-<text x="364.6520833969116" y="120" font-size="10" fill="#0b0b0b" font-weight="normal" text-anchor="start" stroke="#ffffff" stroke-width="5" paint-order="stroke" stroke-linejoin="round">seed program +0.032</text>
-<text x="790" y="104" font-size="14" fill="#0b0b0b" font-weight="bold" text-anchor="start">What the models change</text>
-<text x="790" y="122" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">Share of the 200 turns (5 seeds x 40 iterations) whose edit touched each part</text>
-<rect x="790" y="136" width="10" height="10" rx="2" fill="#2a78d6"/>
-<text x="806" y="146" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Qwen3.8-Flash-Next</text>
-<rect x="940" y="136" width="10" height="10" rx="2" fill="#eb6834"/>
-<text x="956" y="146" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">gpt-oss-20b</text>
-<text x="790" y="192" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Surrogate</text>
-<rect x="920" y="178" width="91.2" height="11" rx="2" fill="#2a78d6"><title>Surrogate: 48% of turns</title></rect>
-<text x="1017.2" y="188" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">48%</text>
-<rect x="920" y="193" width="31.4" height="11" rx="2" fill="#eb6834"><title>Surrogate: 16% of turns</title></rect>
-<text x="957.4" y="203" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">16%</text>
-<text x="790" y="240" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Acquisition</text>
-<rect x="920" y="226" width="120.7" height="11" rx="2" fill="#2a78d6"><title>Acquisition: 64% of turns</title></rect>
-<text x="1046.7" y="236" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">64%</text>
-<rect x="920" y="241" width="118.8" height="11" rx="2" fill="#eb6834"><title>Acquisition: 62% of turns</title></rect>
-<text x="1044.8" y="251" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">62%</text>
-<text x="790" y="288" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Candidate generation</text>
-<rect x="920" y="274" width="137.8" height="11" rx="2" fill="#2a78d6"><title>Candidate generation: 72% of turns</title></rect>
-<text x="1063.8" y="284" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">72%</text>
-<rect x="920" y="289" width="122.5" height="11" rx="2" fill="#eb6834"><title>Candidate generation: 64% of turns</title></rect>
-<text x="1048.5" y="299" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">64%</text>
-<text x="790" y="336" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Settings (constants)</text>
-<rect x="920" y="322" width="96.9" height="11" rx="2" fill="#2a78d6"><title>Settings (constants): 51% of turns</title></rect>
-<text x="1022.9" y="332" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">51%</text>
-<rect x="920" y="337" width="170.1" height="11" rx="2" fill="#eb6834"><title>Settings (constants): 90% of turns</title></rect>
-<text x="1096.0" y="347" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">90%</text>
-<text x="790" y="384" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Main loop</text>
-<rect x="920" y="370" width="75.0" height="11" rx="2" fill="#2a78d6"><title>Main loop: 40% of turns</title></rect>
-<text x="1001.0" y="380" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">40%</text>
-<rect x="920" y="385" width="38.0" height="11" rx="2" fill="#eb6834"><title>Main loop: 20% of turns</title></rect>
-<text x="964.0" y="395" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">20%</text>
-<text x="790" y="432" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">Other</text>
-<rect x="920" y="418" width="33.2" height="11" rx="2" fill="#2a78d6"><title>Other: 18% of turns</title></rect>
-<text x="959.2" y="428" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">18%</text>
-<rect x="920" y="433" width="24.7" height="11" rx="2" fill="#eb6834"><title>Other: 13% of turns</title></rect>
-<text x="950.7" y="443" font-size="11" fill="#52514e" font-weight="normal" text-anchor="start">13%</text>
-<text x="790" y="474" font-size="12" fill="#0b0b0b" font-weight="bold" text-anchor="start">Turns kept as a new best:</text>
-<text x="790" y="494" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">Qwen 11 of 200 (5.5%), gpt-oss 7 of 200 (3.5%)</text>
-<text x="790" y="514" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">Turns with no usable edit: Qwen 24, gpt-oss 4</text>
-<line x1="36" y1="558" x2="1164" y2="558" stroke="#e4e3df"/>
-<text x="36" y="574" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">- On average both loops beat the unchanged seed program and both classical optimizers (2 of 5 gpt-oss seeds do not beat the seed). A Qwen program matches random search given about 1418 queries per problem (gpt-oss: about 735).</text>
-<text x="36" y="596" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">- Qwen and gpt-oss are not distinguishable at n = 5: run-to-run spread is 0.013 (Qwen) and 0.033 (gpt-oss). Almost all of the gain is on the easiest problem type.</text>
-<text x="36" y="618" font-size="12" fill="#0b0b0b" font-weight="normal" text-anchor="start">- Qwen edits across the whole program; gpt-oss mostly tweaks constants. Very few edits pay off for either model, and the loops' 4-problem practice score is noisy.</text>
-<text x="36" y="640" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">Note: Claude-written rows are references, not a fair baseline: written with knowledge of the evaluator (me) or with this project's notes in context (Opus subagent).</text>
-<text x="36" y="662" font-size="12" fill="#52514e" font-weight="normal" text-anchor="start">Note: the practice set is one problem per type. Only two simple classical baselines were run (no TuRBO).</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="Summary of the 4-type benchmark: held-out gain by method, and what Qwen and gpt-oss change">
+<rect x="0.5" y="0.5" width="1199" height="539" rx="10" fill="#101514" stroke="#2a332f"/>
+<text x="40" y="50" font-size="25" fill="#e9eadf" font-weight="normal" text-anchor="start" font-family="Palatino Linotype, Book Antiqua, Palatino, serif">4-type benchmark: results and what the models change</text>
+<text x="40" y="74" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">Held-out: 40 new problems (seeds 4-13), 100 queries each.  Gain = best value found minus the best of 100 random queries.</text>
+<text x="40" y="118" font-size="11" fill="#b8ef5b" font-weight="bold" text-anchor="start">HELD-OUT GAIN OVER RANDOM SEARCH</text>
+<text x="560" y="118" font-size="11" fill="#747a70" font-weight="bold" text-anchor="start">MEAN (n)</text>
+<text x="660" y="118" font-size="11" fill="#747a70" font-weight="bold" text-anchor="start">~ RANDOM QUERIES</text>
+<line x1="40" y1="164" x2="770" y2="164" stroke="#26302c"/>
+<line x1="40" y1="226" x2="770" y2="226" stroke="#26302c"/>
+<line x1="40" y1="288" x2="770" y2="288" stroke="#26302c"/>
+<line x1="275.0" y1="130" x2="275.0" y2="404" stroke="#26302c"/>
+<text x="275.0" y="420" font-size="10" fill="#747a70" font-weight="normal" text-anchor="middle">0</text>
+<line x1="345.0" y1="130" x2="345.0" y2="404" stroke="#26302c"/>
+<text x="345.0" y="420" font-size="10" fill="#747a70" font-weight="normal" text-anchor="middle">+0.04</text>
+<line x1="415.0" y1="130" x2="415.0" y2="404" stroke="#26302c"/>
+<text x="415.0" y="420" font-size="10" fill="#747a70" font-weight="normal" text-anchor="middle">+0.08</text>
+<line x1="485.0" y1="130" x2="485.0" y2="404" stroke="#26302c"/>
+<text x="485.0" y="420" font-size="10" fill="#747a70" font-weight="normal" text-anchor="middle">+0.12</text>
+<line x1="331.8" y1="130" x2="331.8" y2="404" stroke="#e9eadf" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="336.75363540649414" y="128" font-size="10" fill="#e9eadf" font-weight="normal" text-anchor="start" stroke="#101514" stroke-width="5" paint-order="stroke" stroke-linejoin="round">seed program</text>
+<text x="40" y="154" font-size="9" fill="#747a70" font-weight="bold" text-anchor="start">START</text>
+<text x="224" y="154" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Seed program</text>
+<circle cx="331.8" cy="150" r="4.5" fill="#e9eadf" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>unchanged seed program: +0.0324</title></circle>
+<text x="560" y="154" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.032 (n=1)</text>
+<text x="660" y="154" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~286</text>
+<text x="40" y="188" font-size="9" fill="#747a70" font-weight="bold" text-anchor="start">CLASSICAL</text>
+<text x="224" y="188" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Hill climbing</text>
+<circle cx="303.9" cy="178" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.0165</title></circle>
+<circle cx="305.7" cy="184" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: +0.0175</title></circle>
+<circle cx="306.8" cy="190" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.0181</title></circle>
+<circle cx="309.5" cy="181" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: +0.0197</title></circle>
+<circle cx="318.8" cy="187" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.0251</title></circle>
+<rect x="307.4" y="175" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="188" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.019 (n=5)</text>
+<text x="660" y="188" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~155</text>
+<text x="224" y="216" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Genetic algorithm</text>
+<circle cx="268.3" cy="206" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: -0.0039</title></circle>
+<circle cx="270.6" cy="212" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: -0.0025</title></circle>
+<circle cx="283.5" cy="218" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.0049</title></circle>
+<circle cx="298.6" cy="209" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.0135</title></circle>
+<circle cx="312.6" cy="215" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.0215</title></circle>
+<rect x="285.2" y="203" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="216" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.007 (n=5)</text>
+<text x="660" y="216" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">&lt;= 100</text>
+<text x="40" y="250" font-size="9" fill="#747a70" font-weight="bold" text-anchor="start">LLM LOOP</text>
+<text x="224" y="250" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">gpt-oss-20b</text>
+<circle cx="314.1" cy="240" r="4.5" fill="#f0b35c" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 44: +0.0223</title></circle>
+<circle cx="331.8" cy="246" r="4.5" fill="#f0b35c" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 46: +0.0324</title></circle>
+<circle cx="346.4" cy="252" r="4.5" fill="#f0b35c" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 45: +0.0408</title></circle>
+<circle cx="406.4" cy="243" r="4.5" fill="#f0b35c" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 43: +0.0751</title></circle>
+<circle cx="450.9" cy="249" r="4.5" fill="#f0b35c" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 42: +0.1005</title></circle>
+<rect x="368.4" y="237" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="250" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.054 (n=5)</text>
+<text x="660" y="250" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~735</text>
+<text x="224" y="278" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Qwen3.8-Flash</text>
+<circle cx="380.0" cy="268" r="4.5" fill="#6ea8fe" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 46: +0.0600</title></circle>
+<circle cx="383.9" cy="274" r="4.5" fill="#6ea8fe" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 43: +0.0622</title></circle>
+<circle cx="388.2" cy="280" r="4.5" fill="#6ea8fe" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 44: +0.0647</title></circle>
+<circle cx="393.4" cy="271" r="4.5" fill="#6ea8fe" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 42: +0.0677</title></circle>
+<circle cx="435.2" cy="277" r="4.5" fill="#6ea8fe" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>search seed 45: +0.0916</title></circle>
+<rect x="394.6" y="265" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="278" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.069 (n=5)</text>
+<text x="660" y="278" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~1418</text>
+<text x="40" y="312" font-size="9" fill="#747a70" font-weight="bold" text-anchor="start">REFS</text>
+<text x="224" y="312" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Claude (me), first attempt</text>
+<circle cx="377.2" cy="302" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.0584</title></circle>
+<circle cx="410.5" cy="308" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.0774</title></circle>
+<circle cx="412.8" cy="314" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: +0.0788</title></circle>
+<circle cx="415.8" cy="305" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.0804</title></circle>
+<circle cx="419.4" cy="311" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: +0.0825</title></circle>
+<rect x="405.6" y="299" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="312" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.075 (n=5)</text>
+<text x="660" y="312" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~1875</text>
+<text x="224" y="340" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Claude (me), tuned</text>
+<circle cx="478.4" cy="330" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: +0.1162</title></circle>
+<circle cx="480.1" cy="336" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.1172</title></circle>
+<circle cx="484.1" cy="342" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.1195</title></circle>
+<circle cx="487.5" cy="333" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: +0.1214</title></circle>
+<circle cx="517.3" cy="339" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.1385</title></circle>
+<rect x="488.0" y="327" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="340" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.123 (n=5)</text>
+<text x="660" y="340" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">&gt; 3000</text>
+<text x="224" y="368" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Opus subagent, one-shot</text>
+<circle cx="308.1" cy="358" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.0189</title></circle>
+<circle cx="322.5" cy="364" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: +0.0271</title></circle>
+<circle cx="343.9" cy="370" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: +0.0394</title></circle>
+<circle cx="370.5" cy="361" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.0546</title></circle>
+<circle cx="371.2" cy="367" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.0550</title></circle>
+<rect x="341.8" y="355" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="368" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.039 (n=5)</text>
+<text x="660" y="368" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~381</text>
+<text x="224" y="396" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="end">Opus subagent, tuned once</text>
+<circle cx="366.0" cy="386" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 2: +0.0520</title></circle>
+<circle cx="373.8" cy="392" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 1: +0.0565</title></circle>
+<circle cx="378.6" cy="398" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 3: +0.0592</title></circle>
+<circle cx="379.3" cy="389" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 0: +0.0596</title></circle>
+<circle cx="388.4" cy="395" r="4.5" fill="#8b9086" fill-opacity="0.9" stroke="#101514" stroke-width="2"><title>internal seed 4: +0.0648</title></circle>
+<rect x="375.7" y="383" width="3" height="18" rx="1.5" fill="#e9eadf"/>
+<text x="560" y="396" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">+0.058 (n=5)</text>
+<text x="660" y="396" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">~881</text>
+<line x1="776" y1="104" x2="776" y2="408" stroke="#26302c"/>
+<text x="800" y="118" font-size="11" fill="#b8ef5b" font-weight="bold" text-anchor="start">SHARE OF TURNS THAT EDIT EACH PART</text>
+<rect x="800" y="130" width="10" height="10" rx="2" fill="#6ea8fe"/>
+<text x="816" y="140" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Qwen</text>
+<rect x="890" y="130" width="10" height="10" rx="2" fill="#f0b35c"/>
+<text x="906" y="140" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">gpt-oss</text>
+<text x="800" y="179" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Candidates</text>
+<rect x="892" y="164" width="159.5" height="10" rx="2" fill="#6ea8fe"><title>Candidates: 72% of turns</title></rect>
+<text x="1057.5" y="173" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">72%</text>
+<rect x="892" y="178" width="141.9" height="10" rx="2" fill="#f0b35c"><title>Candidates: 64% of turns</title></rect>
+<text x="1039.9" y="187" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">64%</text>
+<text x="800" y="219" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Acquisition</text>
+<rect x="892" y="204" width="139.7" height="10" rx="2" fill="#6ea8fe"><title>Acquisition: 64% of turns</title></rect>
+<text x="1037.7" y="213" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">64%</text>
+<rect x="892" y="218" width="137.5" height="10" rx="2" fill="#f0b35c"><title>Acquisition: 62% of turns</title></rect>
+<text x="1035.5" y="227" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">62%</text>
+<text x="800" y="259" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Surrogate</text>
+<rect x="892" y="244" width="105.6" height="10" rx="2" fill="#6ea8fe"><title>Surrogate: 48% of turns</title></rect>
+<text x="1003.6" y="253" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">48%</text>
+<rect x="892" y="258" width="36.3" height="10" rx="2" fill="#f0b35c"><title>Surrogate: 16% of turns</title></rect>
+<text x="934.3" y="267" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">16%</text>
+<text x="800" y="299" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Settings</text>
+<rect x="892" y="284" width="112.2" height="10" rx="2" fill="#6ea8fe"><title>Settings: 51% of turns</title></rect>
+<text x="1010.2" y="293" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">51%</text>
+<rect x="892" y="298" width="196.9" height="10" rx="2" fill="#f0b35c"><title>Settings: 90% of turns</title></rect>
+<text x="1094.9" y="307" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">90%</text>
+<text x="800" y="339" font-size="12" fill="#e9eadf" font-weight="normal" text-anchor="start">Main loop</text>
+<rect x="892" y="324" width="86.9" height="10" rx="2" fill="#6ea8fe"><title>Main loop: 40% of turns</title></rect>
+<text x="984.9" y="333" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">40%</text>
+<rect x="892" y="338" width="44.0" height="10" rx="2" fill="#f0b35c"><title>Main loop: 20% of turns</title></rect>
+<text x="942.0" y="347" font-size="11" fill="#a7ab9b" font-weight="normal" text-anchor="start">20%</text>
+<text x="800" y="374" font-size="11" fill="#747a70" font-weight="bold" text-anchor="start">EDITS THAT BECAME A NEW BEST</text>
+<text x="800" y="404" font-size="30" fill="#6ea8fe" font-weight="bold" text-anchor="start">11</text>
+<text x="850" y="404" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">of 200 Qwen turns</text>
+<text x="990" y="404" font-size="30" fill="#f0b35c" font-weight="bold" text-anchor="start">7</text>
+<text x="1024" y="404" font-size="12" fill="#a7ab9b" font-weight="normal" text-anchor="start">of 200 gpt-oss</text>
+<line x1="40" y1="438" x2="1160" y2="438" stroke="#2a332f"/>
+<text x="40" y="456" font-size="12.5" fill="#e9eadf" font-weight="normal" text-anchor="start">Both loops beat the seed program on average and beat both classical optimizers, but Qwen and gpt-oss cannot be told apart at n = 5.</text>
+<text x="40" y="478" font-size="12.5" fill="#e9eadf" font-weight="normal" text-anchor="start">A Qwen program matches random search given about 1418 queries per problem (gpt-oss: about 735). Qwen edits the whole program; gpt-oss mostly tweaks constants.</text>
+<text x="40" y="500" font-size="12.5" fill="#a7ab9b" font-weight="normal" text-anchor="start">Grey Claude rows are references, not a fair baseline: written with knowledge of the evaluator (me) or with the project notes in context (Opus subagent).</text>
 </svg>

@@ -1949,4 +1949,4 @@ pre.diff-view {
 
 .summary-panel { margin: 0 0 22px; }
 .summary-panel[hidden] { display: none; }
-.summary-panel img { display: block; width: 100%; height: auto; margin-top: 12px; background: #ffffff; border-radius: 6px; }
+.summary-panel img { display: block; width: 100%; height: auto; margin-top: 12px; border-radius: 10px; }
