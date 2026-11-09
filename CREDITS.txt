@@ -1,0 +1,2 @@
+Dashboard UI code (index.html, app.js, styles.css, node_search.js) is adapted from the Spiral-site repository by zhouk2-blip,
+used with the permission of its author as relayed by the project owner. Confirm before sharing or publishing this folder.

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Read-only record of LLM-written Bayesian-optimization experiments."
+    />
+    <title>Plain-loop experiments</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23080b0b' stroke='%23b8ef5b' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2369d7d0'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css?v=caf49fe93903" />
+    <script src="site-config.js?v=caf49fe93903"></script>
+    <script src="site-data.js" defer></script>
+    <script src="node_search.js?v=caf49fe93903" defer></script>
+    <script src="app.js?v=caf49fe93903" defer></script>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <main class="app-shell">
+      <header class="masthead">
+        <div class="identity">
+          <span id="masthead-eyebrow" class="eyebrow">LLM-written Bayesian optimization / experiment record</span>
+          <h1 id="masthead-title">Plain-loop <span>experiments</span></h1>
+        </div>
+        <div class="live-controls">
+          <label class="run-picker">
+            <span>Campaign</span>
+            <select id="run-select" aria-label="Campaign"></select>
+          </label>
+          <button id="refresh-button" class="button" type="button">Refresh now</button>
+          <label class="live-switch">
+            <input id="live-toggle" type="checkbox" checked />
+            <span class="switch-track" aria-hidden="true"><span></span></span>
+            <span>Live</span>
+          </label>
+        </div>
+        <div class="connection-line" aria-live="polite">
+          <span id="connection-dot" class="connection-dot"></span>
+          <span id="connection-label">Connecting</span>
+          <span class="divider">/</span>
+          <span id="updated-at">No snapshot yet</span>
+        </div>
+      </header>
+
+      <section class="metric-strip" aria-label="Campaign overview">
+        <article class="metric">
+          <span class="metric-label">Best practice score</span>
+          <strong id="metric-best">—</strong>
+          <small id="metric-best-node">No scored node</small>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Programs tried</span>
+          <strong id="metric-nodes">0</strong>
+          <small id="metric-running">—</small>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Best held-out gain</span>
+          <strong id="metric-leases">—</strong>
+          <small id="metric-capacity">—</small>
+        </article>
+        <article class="metric metric-alert">
+          <span class="metric-label">Benchmark</span>
+          <strong id="metric-issues">—</strong>
+          <small id="metric-issue-level">—</small>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <article class="panel tree-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">01</span>
+              <h2>Iteration tree</h2>
+            </div>
+            <div class="tree-toolbar">
+              <div class="node-search" role="search">
+                <label class="visually-hidden" for="node-search-input">Locate a program</label>
+                <span class="node-search-mark" aria-hidden="true">⌕</span>
+                <input
+                  id="node-search-input"
+                  type="search"
+                  placeholder="search seed, iteration, outcome, explanation…"
+                  autocomplete="off"
+                  spellcheck="false"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="node-search-results"
+                />
+                <kbd aria-hidden="true">/</kbd>
+                <button
+                  id="node-search-clear"
+                  class="node-search-clear"
+                  type="button"
+                  aria-label="Clear node search"
+                  hidden
+                >×</button>
+                <div
+                  id="node-search-results"
+                  class="node-search-results"
+                  role="listbox"
+                  aria-label="Matching programs"
+                  hidden
+                ></div>
+                <span id="node-search-status" class="visually-hidden" aria-live="polite"></span>
+              </div>
+              <div class="tree-actions">
+                <button id="discard-button" class="text-button" type="button">Discarded: hidden</button>
+                <button id="order-button" class="text-button" type="button">Order: round</button>
+                <button id="expand-button" class="text-button" type="button">Expand all</button>
+                <button id="fit-button" class="text-button" type="button">Fit view</button>
+              </div>
+            </div>
+          </div>
+          <div class="tree-legend" aria-label="Tree legend">
+            <span><i class="legend-dot status-seed"></i>Seed program</span>
+            <span><i class="legend-dot status-kept"></i>Kept (new best)</span>
+            <span><i class="legend-dot status-worse"></i>Worse (discarded)</span>
+            <span><i class="legend-dot status-failed"></i>Failed</span>
+            <span><i class="legend-line"></i>Path to the best program</span>
+            <span>R· iteration</span>
+          </div>
+          <div id="tree-stage" class="tree-stage">
+            <svg
+              id="research-tree"
+              role="img"
+              aria-label="Interactive tree of programs tried"
+            >
+              <g id="tree-viewport">
+                <g id="tree-links"></g>
+                <g id="tree-nodes"></g>
+              </g>
+            </svg>
+            <div id="tree-empty" class="empty-state">
+              <span class="empty-orbit" aria-hidden="true"></span>
+              <strong>No runs found</strong>
+              <p>The tree appears when a campaign has been exported.</p>
+            </div>
+            <div id="tree-tooltip" class="tree-tooltip" role="tooltip"></div>
+            <div class="tree-help">Drag to pan · wheel to zoom · click to inspect · double-click to fold</div>
+          </div>
+        </article>
+
+        <aside class="panel inspector-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">02</span>
+              <h2>Program inspector</h2>
+            </div>
+            <span id="inspector-status" class="status-chip status-unknown">No selection</span>
+          </div>
+          <div id="inspector-empty" class="inspector-empty">
+            Select a program to see what the model changed, how it scored, and its own explanation.
+          </div>
+          <div id="inspector-content" class="inspector-content" hidden>
+            <div class="candidate-title">
+              <div>
+                <span id="candidate-operator" class="candidate-operator">—</span>
+                <h3 id="candidate-id">—</h3>
+              </div>
+              <div class="candidate-score">
+                <span>practice score</span>
+                <strong id="candidate-score">—</strong>
+              </div>
+            </div>
+
+            <dl class="candidate-facts">
+              <div><dt>Model</dt><dd id="candidate-device">—</dd></div>
+              <div><dt>Built on</dt><dd id="candidate-parent">—</dd></div>
+              <div><dt>Where</dt><dd id="candidate-round">—</dd></div>
+              <div><dt>Search seed</dt><dd id="candidate-branch">—</dd></div>
+              <div class="fact-ops"><dt>Artifacts</dt><dd id="candidate-artifact">—</dd></div>
+              <div><dt>Outcome</dt><dd id="candidate-trust">—</dd></div>
+            </dl>
+
+            <section class="inspector-section">
+              <h4>Held-out result</h4>
+              <div class="table-wrap">
+                <table class="task-table">
+                  <thead>
+                    <tr>
+                      <th>Set</th>
+                      <th>Status</th>
+                      <th>Gain over random</th>
+                    </tr>
+                  </thead>
+                  <tbody id="seed-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="inspector-section">
+              <h4>Method</h4>
+              <p id="candidate-method">—</p>
+              <p id="candidate-pair" class="inspector-note">—</p>
+            </section>
+            <section class="inspector-section" hidden>
+              <h4>Method provenance</h4>
+              <ul id="candidate-references" class="reference-list"></ul>
+            </section>
+            <section id="candidate-literature-wrap" class="inspector-section" hidden>
+              <h4>Literature review</h4>
+              <p id="candidate-literature-status" class="inspector-note"></p>
+              <div id="candidate-literature" class="finding-body"></div>
+              <ul id="candidate-literature-sources" class="reference-list"></ul>
+              <details id="candidate-literature-queries-wrap" class="log-section" hidden>
+                <summary>Search queries</summary>
+                <pre id="candidate-literature-queries"></pre>
+              </details>
+            </section>
+            <section class="inspector-section">
+              <h4>Approach</h4>
+              <div id="candidate-approach" class="finding-body"></div>
+              <details id="candidate-hypothesis-wrap" class="log-section" hidden>
+                <summary>Model's full explanation</summary>
+                <pre id="candidate-hypothesis"></pre>
+              </details>
+            </section>
+            <section id="candidate-method-change-wrap" class="inspector-section" hidden>
+              <h4 id="candidate-method-change-title">Method change</h4>
+              <div id="candidate-method-change" class="finding-body"></div>
+            </section>
+            <section class="inspector-section">
+              <h4>Finding</h4>
+              <p id="candidate-finding-headline" class="finding-headline">—</p>
+              <div id="candidate-finding" class="finding-body"></div>
+              <details id="candidate-receipt-wrap" class="log-section" hidden>
+                <summary>Edits the model proposed</summary>
+                <pre id="candidate-receipt"></pre>
+              </details>
+            </section>
+
+            <section class="inspector-section" hidden>
+              <h4>Molecular feature</h4>
+              <p id="candidate-molecular-headline" class="finding-headline">—</p>
+              <div id="candidate-molecular-chips" class="chem-chips"></div>
+              <p id="candidate-molecular-character"></p>
+              <div id="candidate-molecular-gaps" class="gap-list"></div>
+              <details id="candidate-molecular-tasks-wrap" class="log-section" hidden>
+                <summary>Per objective</summary>
+                <div id="candidate-molecular-tasks" class="molecular-tasks"></div>
+              </details>
+            </section>
+
+            <section class="inspector-section">
+              <h4>Result by problem type</h4>
+              <p id="task-table-note" class="inspector-note">
+                Gain over random search on the practice problems, for the seed program and for this program. Held-out is filled in where this program was scored on unseen problems.
+              </p>
+              <div class="table-wrap">
+                <table class="task-table">
+                  <thead>
+                    <tr>
+                      <th>Problem type</th>
+                      <th>Status</th>
+                      <th>Seed program</th>
+                      <th>This program</th>
+                      <th>Held-out</th>
+                      <th>Problems</th>
+                    </tr>
+                  </thead>
+                  <tbody id="task-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="inspector-section section-ops">
+              <h4>Integrity checks</h4>
+              <div id="candidate-checks" class="check-list"></div>
+            </section>
+
+            <details id="candidate-log-wrap" class="log-section">
+              <summary>Model's reply (excerpt)</summary>
+              <pre id="candidate-log">Select a program to read the model reply.</pre>
+            </details>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lower-grid section-ops">
+        <article class="panel slots-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">03</span>
+              <h2>Build slots & resource pools</h2>
+            </div>
+          </div>
+          <div id="resource-pools" class="resource-pools"></div>
+          <div id="slot-grid" class="slot-grid"></div>
+        </article>
+
+        <article class="panel findings-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">04</span>
+              <h2>Automated checks</h2>
+            </div>
+            <span id="finding-count" class="count-badge">0</span>
+          </div>
+          <div id="findings-list" class="findings-list"></div>
+        </article>
+
+        <article class="panel events-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="section-index">05</span>
+              <h2>Recent events</h2>
+            </div>
+          </div>
+          <ol id="events-list" class="events-list"></ol>
+        </article>
+      </section>
+
+      <footer>
+        <span id="footer-role">Read-only experiment record</span>
+        <span id="repo-path">Generated by src/scripts/export_dashboard.py · page code adapted from zhouk2-blip/Spiral-site</span>
+      </footer>
+    </main>
+  </body>
+</html>
