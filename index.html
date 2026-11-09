@@ -193,6 +193,16 @@
               </div>
             </section>
 
+            <section id="change-section" class="inspector-section" hidden>
+              <h4>What changed (compared with the program it was built on)</h4>
+              <p id="change-summary" class="finding-headline">—</p>
+              <div id="change-chips" class="chem-chips"></div>
+              <details id="change-diff-wrap" class="log-section">
+                <summary>Code diff (red = removed, green = added)</summary>
+                <pre id="change-diff" class="diff-view"></pre>
+              </details>
+            </section>
+
             <section class="inspector-section">
               <h4>Method</h4>
               <p id="candidate-method">—</p>
@@ -279,6 +289,30 @@
             </details>
           </div>
         </aside>
+      </section>
+
+      <section class="panel change-panel" id="change-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="section-index">03</span>
+            <h2>What the models try</h2>
+          </div>
+          <span id="change-panel-note" class="count-badge"></span>
+        </div>
+        <p class="change-intro">
+          Each turn the model edits the best program so far. Every edit is compared with that program and credited to the parts it touched
+          (one turn can touch several). <strong>Left:</strong> how often each part was touched and how those turns ended.
+          <strong>Right:</strong> the same turns in order, one row per part and one column per iteration; click a square to open that program.
+        </p>
+        <div class="change-body">
+          <div id="change-bars" class="change-bars"></div>
+          <div id="change-grids" class="change-grids"></div>
+        </div>
+        <div class="change-legend">
+          <span><i class="legend-dot status-kept"></i>Kept (new best)</span>
+          <span><i class="legend-dot status-worse"></i>Worse (discarded)</span>
+          <span><i class="legend-dot status-failed"></i>Failed (crashed, or no usable edit)</span>
+        </div>
       </section>
 
       <section class="lower-grid section-ops">

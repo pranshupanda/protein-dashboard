@@ -1784,3 +1784,165 @@ footer {
 .inspector-section[hidden] {
   display: none !important;
 }
+
+/* ---------------------------------------------------------------------- */
+/* What changed: inspector diff and the "what the models try" panel.      */
+/* ---------------------------------------------------------------------- */
+
+pre.diff-view {
+  max-height: 340px;
+  overflow: auto;
+  white-space: pre;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.diff-add {
+  color: var(--phosphor);
+  background: rgb(184 239 91 / 9%);
+}
+
+.diff-del {
+  color: var(--red);
+  background: rgb(242 109 99 / 9%);
+}
+
+.diff-hunk {
+  color: var(--cyan);
+}
+
+.diff-ctx {
+  color: var(--ink-faint);
+}
+
+.change-chip {
+  font-family: var(--mono);
+}
+
+.change-const {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.change-panel {
+  margin-top: 18px;
+}
+
+.change-intro {
+  margin: 0;
+  padding: 12px 18px 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: 980px;
+}
+
+.change-body {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr);
+  gap: 28px;
+  padding: 16px 18px 6px;
+}
+
+.cbar-row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr) 118px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 9px;
+  font-size: 11px;
+}
+
+.cbar-name {
+  color: var(--ink);
+}
+
+.cbar-count {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.cbar {
+  display: flex;
+  height: 13px;
+  background: rgb(255 255 255 / 4%);
+}
+
+.cbar .seg.kept {
+  background: var(--phosphor);
+}
+
+.cbar .seg.worse {
+  background: var(--blue);
+}
+
+.cbar .seg.failed {
+  background: var(--red);
+}
+
+.change-grids {
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid-head {
+  margin-bottom: 3px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.grid-label {
+  fill: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+
+.grid-cell {
+  cursor: pointer;
+}
+
+.grid-cell.cell-kept {
+  fill: var(--phosphor);
+}
+
+.grid-cell.cell-worse {
+  fill: var(--blue);
+  opacity: 0.75;
+}
+
+.grid-cell.cell-failed {
+  fill: var(--red);
+  opacity: 0.8;
+}
+
+.grid-cell:hover {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.change-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 6px 18px 16px;
+  color: var(--ink-soft);
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .change-body {
+    grid-template-columns: 1fr;
+  }
+
+  .cbar-row {
+    grid-template-columns: 120px minmax(0, 1fr) 100px;
+  }
+}

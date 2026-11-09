@@ -132,6 +132,14 @@ const elements = {
   candidateFindingHeadline: document.getElementById("candidate-finding-headline"),
   candidateReceiptWrap: document.getElementById("candidate-receipt-wrap"),
   candidateReceipt: document.getElementById("candidate-receipt"),
+  changeSection: document.getElementById("change-section"),
+  changeSummary: document.getElementById("change-summary"),
+  changeChips: document.getElementById("change-chips"),
+  changeDiffWrap: document.getElementById("change-diff-wrap"),
+  changeDiff: document.getElementById("change-diff"),
+  changeBars: document.getElementById("change-bars"),
+  changeGrids: document.getElementById("change-grids"),
+  changePanelNote: document.getElementById("change-panel-note"),
   molecularHeadline: document.getElementById("candidate-molecular-headline"),
   molecularChips: document.getElementById("candidate-molecular-chips"),
   molecularCharacter: document.getElementById("candidate-molecular-character"),
@@ -623,6 +631,7 @@ function renderAll() {
   renderFindings(snapshot.issues || []);
   renderEvents(snapshot.events || []);
   renderInspector();
+  renderChangeMap(snapshot);
   renderNodeSearch();
   elements.repoPath.textContent = STATIC_SITE
     ? `Campaign ${snapshot.run_tag || "—"}`
@@ -994,7 +1003,161 @@ function selectNode(nodeId) {
   renderInspector();
 }
 
+const COMPONENT_SHORT = {
+  surrogate: "Surrogate",
+  acquisition: "Acquisition",
+  candidates: "Candidates",
+  settings: "Settings",
+  loop: "Main loop",
+  other: "Other",
+  none: "No edit",
+};
+
+function componentLabel(key) {
+  const found = (state.snapshot?.components || []).find(([k]) => k === key);
+  return found ? found[1] : key;
+}
+
+// Inspector: what this program changed compared with the program it was built on.
+function renderChange(node) {
+  const wrap = elements.changeSection;
+  if (node.id === "seed-prog") {
+    wrap.hidden = true;
+    return;
+  }
+  wrap.hidden = false;
+  elements.changeChips.replaceChildren();
+  elements.changeDiff.replaceChildren();
+  elements.changeDiffWrap.hidden = true;
+  if (node.finding_summary === undefined) {
+    elements.changeSummary.textContent = "Loading…";
+    return;
+  }
+  const change = node.change;
+  if (!change) {
+    elements.changeSummary.textContent =
+      "No program to compare: the reply could not be turned into a working edit (see the model's reply below).";
+    return;
+  }
+  const parts = change.components.map((key) => COMPONENT_SHORT[key] || key);
+  elements.changeSummary.textContent = parts.length
+    ? `Touched: ${parts.join("; ")}. ${change.added} lines added, ${change.removed} removed.`
+    : `No change to the code's logic (${change.added} lines added, ${change.removed} removed: comments or formatting).`;
+  change.components.forEach((key) => {
+    const chip = document.createElement("span");
+    chip.className = "chem-chip change-chip";
+    chip.textContent = COMPONENT_SHORT[key] || key;
+    elements.changeChips.append(chip);
+  });
+  change.constants.forEach(([name, from, to]) => {
+    const chip = document.createElement("span");
+    chip.className = "chem-chip change-chip change-const";
+    chip.textContent = `${name} ${String(from).slice(0, 18)} → ${String(to).slice(0, 18)}`;
+    elements.changeChips.append(chip);
+  });
+  if (change.diff.length) {
+    elements.changeDiffWrap.hidden = false;
+    change.diff.forEach(([kind, text]) => {
+      const line = document.createElement("span");
+      line.className = { "+": "diff-add", "-": "diff-del", "@": "diff-hunk" }[kind] || "diff-ctx";
+      line.textContent = `${kind === "@" ? "" : kind} ${text}\n`;
+      elements.changeDiff.append(line);
+    });
+  }
+}
+
+// Panel: how often each part of the program was touched, by outcome, and the turns in order per search seed.
+function renderChangeMap(snapshot) {
+  const comps = snapshot.components || [];
+  const summary = snapshot.change_summary || {};
+  const nodes = (snapshot.nodes || []).filter((node) => node.round > 0);
+  elements.changeBars.replaceChildren();
+  elements.changeGrids.replaceChildren();
+  if (!comps.length || !nodes.length) {
+    elements.changePanelNote.textContent = "";
+    return;
+  }
+  elements.changePanelNote.textContent = `${nodes.length} turns`;
+  const total = (s) => (s ? s.kept + s.worse + s.failed : 0);
+  const peak = Math.max(1, ...comps.map(([key]) => total(summary[key])));
+  comps.forEach(([key, label]) => {
+    const s = summary[key] || { kept: 0, worse: 0, failed: 0 };
+    const row = document.createElement("div");
+    row.className = "cbar-row";
+    const name = document.createElement("span");
+    name.className = "cbar-name";
+    name.textContent = label;
+    const bar = document.createElement("div");
+    bar.className = "cbar";
+    ["kept", "worse", "failed"].forEach((kind) => {
+      const seg = document.createElement("span");
+      seg.className = `seg ${kind}`;
+      seg.style.width = `${(s[kind] / peak) * 100}%`;
+      seg.title = `${s[kind]} ${kind}`;
+      bar.append(seg);
+    });
+    const text = document.createElement("span");
+    text.className = "cbar-count";
+    const n = total(s);
+    text.textContent = n ? `${n} turns · ${Math.round((s.kept / n) * 100)}% kept` : "0 turns";
+    row.append(name, bar, text);
+    elements.changeBars.append(row);
+  });
+
+  const seeds = [...new Set(nodes.map((node) => node.lineage_id))];
+  const maxRound = Math.max(...nodes.map((node) => node.round));
+  const cell = 13;
+  const gap = 2;
+  const labelW = 74;
+  seeds.forEach((seed) => {
+    const mine = nodes.filter((node) => node.lineage_id === seed);
+    const head = document.createElement("div");
+    head.className = "grid-head";
+    const kept = mine.filter((node) => node.status_key === "kept").length;
+    head.textContent = `${seed} · ${mine.length} turns · ${kept} kept`;
+    const width = labelW + maxRound * (cell + gap);
+    const height = comps.length * (cell + gap) + 4;
+    const svg = createSvg("svg", { width, height, viewBox: `0 0 ${width} ${height}`, role: "img", "aria-label": `Turns of ${seed}, by part touched` });
+    comps.forEach(([key], rowIndex) => {
+      const label = createSvg("text", { x: 0, y: rowIndex * (cell + gap) + cell - 3, class: "grid-label" });
+      label.textContent = COMPONENT_SHORT[key] || key;
+      svg.append(label);
+    });
+    mine.forEach((node) => {
+      const keys = node.components && node.components.length ? node.components : ["none"];
+      keys.forEach((key) => {
+        const rowIndex = comps.findIndex(([k]) => k === key);
+        if (rowIndex < 0) return;
+        const rect = createSvg("rect", {
+          x: labelW + (node.round - 1) * (cell + gap),
+          y: rowIndex * (cell + gap),
+          width: cell,
+          height: cell,
+          rx: 2,
+          class: `grid-cell cell-${node.status_key}`,
+          "data-node-id": node.id,
+        });
+        const tip = createSvg("title");
+        tip.textContent = `${seed}, iteration ${node.round}: ${node.status}${
+          Number.isFinite(Number(node.score)) && node.score !== null ? ` ${Number(node.score).toFixed(4)}` : ""
+        } · ${keys.map((k) => COMPONENT_SHORT[k] || k).join(", ")}`;
+        rect.append(tip);
+        rect.addEventListener("click", () => {
+          selectNode(node.id);
+          document.querySelector(".inspector-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+        svg.append(rect);
+      });
+    });
+    const block = document.createElement("div");
+    block.className = "grid-block";
+    block.append(head, svg);
+    elements.changeGrids.append(block);
+  });
+}
+
 function renderNodeSections(node) {
+  renderChange(node);
   renderMethodReferences(node.method_references);
   renderLiteratureReview(node);
   renderApproach(node);
