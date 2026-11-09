@@ -1946,3 +1946,7 @@ pre.diff-view {
     grid-template-columns: 120px minmax(0, 1fr) 100px;
   }
 }
+
+.summary-panel { margin: 0 0 22px; }
+.summary-panel[hidden] { display: none; }
+.summary-panel img { display: block; width: 100%; height: auto; margin-top: 12px; background: #ffffff; border-radius: 6px; }
